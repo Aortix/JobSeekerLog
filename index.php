@@ -6,8 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Job Seeker's Log</title>
+    <style type="text/css">
+    </style>
 </head>
 <body>
-    <?php include("./templates/Header/header.php")?>
+    <?php include("./templates/Header/Header.php")?>
+    <?php include("./templates/Job/Job.php")?>
 </body>
 </html>
