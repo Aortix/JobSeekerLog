@@ -11,6 +11,6 @@
 </head>
 <body>
     <?php include("./templates/Header/Header.php")?>
-    <?php include("./templates/Job/Job.php")?>
+    <?php include("./templates/JobsContainer/JobsContainer.php")?>
 </body>
 </html>
