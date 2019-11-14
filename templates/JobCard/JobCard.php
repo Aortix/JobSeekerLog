@@ -2,23 +2,23 @@
     class JobCard {
         private $companyName;
         private $companyPosition;
-        private $jobWebsite;
+        private $companyWebsite;
         private $appliedDate;
         private $location;
         private $aboutCompany;
         private $aboutPositionDescription;
-        private $aboutPositionPoints;
+        private $notes;
 
-        public function __construct($companyName, $companyPosition, $jobWebsite, 
-        $appliedDate, $location, $aboutCompany, $aboutPositionDescription, $aboutPositionPoints) {
+        public function __construct($companyName, $companyPosition, $companyWebsite, 
+        $appliedDate, $location, $aboutCompany, $aboutPositionDescription, $notes) {
             $this->companyName = $companyName;
             $this->companyPosition = $companyPosition;
-            $this->jobWebsite = $jobWebsite;
+            $this->companyWebsite = $companyWebsite;
             $this->appliedDate = $appliedDate;
             $this->location = $location;
             $this->aboutCompany = $aboutCompany;
             $this->aboutPositionDescription = $aboutPositionDescription;
-            $this->aboutPositionPoints = $aboutPositionPoints;
+            $this->notes = $notes;
         }
 
         public function getCompanyName() {
@@ -37,12 +37,12 @@
             $this->companyPosition = $companyPosition;
         }
 
-        public function getJobWebsite() {
-            return $this->jobWebsite;
+        public function getCompanyWebsite() {
+            return $this->companyWebsite;
         }
 
-        public function setJobWebsite($jobWebsite) {
-            $this->jobWebsite = $jobWebsite;
+        public function setCompanyWebsite($companyWebsite) {
+            $this->companyWebsite = $companyWebsite;
         }
 
         public function getAppliedDate() {
@@ -77,12 +77,12 @@
             $this->aboutPositionDescription = $aboutPositionDescription;
         }
 
-        public function getAboutPositionPoints() {
-            return $this->aboutPositionPoints;
+        public function getNotes() {
+            return $this->notes;
         }
 
-        public function setAboutPositionPoints($aboutPositionPoints) {
-            $this->aboutPositionPoints = $aboutPositionPoints;
+        public function setNotes($notes) {
+            $this->notes = $notes;
         }
     }
 ?>
