@@ -15,9 +15,9 @@
 </head>
 <body>
     <div id="Index">
-        <?php include("./templates/AddingAJobPopup/AddingAJobPopup.php"); ?>
-        <?php include("./templates/Header/Header.php")?>
-        <?php include("./templates/JobsContainer/JobsContainer.php")?>
+        <?php include("./views/AddingAJobPopup/AddingAJobPopup.php"); ?>
+        <?php include("./views/Header/Header.php")?>
+        <?php include("./views/JobCardsContainer/JobCardsContainer.php")?>
     </div>
     <script type="text/javascript">
         //Header Functions

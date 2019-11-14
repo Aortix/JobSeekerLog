@@ -1,30 +1,10 @@
 <?php 
+    include("./classes/JobCard.php");
+    include("./queries/jobQueries.php");
 
-    include("./sql_connection_info.php");
-
-    $conn = mysqli_connect('localhost', $username, $password, $database_name);
-
-    if (!$conn) {
-        echo 'Connection error: ' . mysqli_connect_error();
-    }
-
-    //Write query for all job posts
-    $sql = 'SELECT * FROM Job_posts';
-
-    //Make query and get result
-    $result = mysqli_query($conn, $sql);
-
-    //Fetch the resulting rows as an array
-    $job_posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-    //Free result from memory
-    mysqli_free_result($result);
-
-    //Close Connection
-    mysqli_close($conn);
-
-    include("./templates/JobCard/JobCard.php");
-
+    //Function comes from jobQueries
+    $job_posts = getJobPostings();
+    
     $jobsArray = [];
 
     foreach ($job_posts as $job_post) {

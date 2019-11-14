@@ -1,5 +1,4 @@
 <?php 
-
 ?>
 
 <form class="form-inline justify-content-center">
