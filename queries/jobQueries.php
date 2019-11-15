@@ -48,14 +48,14 @@
 
         $id = 0;
         $timestamp;
-        $company_name = $_POST['company_name'] ?: "N/A";
-        $company_position = $_POST['company_position'] ?: "N/A";
-        $company_website = $_POST['company_website'] ?: "N/A";
-        $date_applied = $_POST['date_applied'] ?: date('m/d/Y');
-        $location = $_POST['company_location'] ?: "N/A";
-        $about_company = $_POST['about_company'] ?: "N/A";
-        $about_position = $_POST['about_position'] ?: "N/A";
-        $notes = $_POST['company_notes'] ?: "N/A";
+        $company_name = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_name']))) ?: "N/A";
+        $company_position = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_position']))) ?: "N/A";
+        $company_website = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_website']))) ?: "N/A";
+        $date_applied = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['date_applied']))) ?: date('m/d/Y');
+        $location = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_location']))) ?: "N/A";
+        $about_company = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['about_company']))) ?: "N/A";
+        $about_position = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['about_position']))) ?: "N/A";
+        $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_notes']))) ?: "N/A";
 
         if (!$stmt->execute()) {
             echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;

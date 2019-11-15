@@ -17,7 +17,7 @@
     <div id="Index">
         <?php include("./views/AddingAJobPopup/AddingAJobPopup.php"); ?>
         <?php include("./views/Header/Header.php")?>
-        <?php include("./views/JobCardsContainer/JobCardsContainer.php")?>
+        <?php include("./views/JobCards/JobCards.php")?>
     </div>
     <script type="text/javascript">
         //Header Functions
@@ -30,6 +30,17 @@
         const onclickCloseAddJobForm = () => {
             document.body.style.overflow = "visible";
             document.getElementById("AddingAJobPopup").style.display = "none";
+        }
+
+        //JobCard Functions
+        const updatingACard = (e) => {
+            console.log(e);
+            console.log("clicked update");
+        }
+
+        const deletingACard = (e) => {
+            console.log(e);
+            console.log("clicked deleted");
         }
     </script>
 </body>

@@ -6,18 +6,18 @@
         private $appliedDate;
         private $location;
         private $aboutCompany;
-        private $aboutPositionDescription;
+        private $aboutPosition;
         private $notes;
 
         public function __construct($companyName, $companyPosition, $companyWebsite, 
-        $appliedDate, $location, $aboutCompany, $aboutPositionDescription, $notes) {
+        $appliedDate, $location, $aboutCompany, $aboutPosition, $notes) {
             $this->companyName = $companyName;
             $this->companyPosition = $companyPosition;
             $this->companyWebsite = $companyWebsite;
             $this->appliedDate = $appliedDate;
             $this->location = $location;
             $this->aboutCompany = $aboutCompany;
-            $this->aboutPositionDescription = $aboutPositionDescription;
+            $this->aboutPosition = $aboutPosition;
             $this->notes = $notes;
         }
 
@@ -69,12 +69,12 @@
             $this->aboutCompany = $aboutCompany;
         }
 
-        public function getAboutPositionDescription() {
-            return $this->aboutPositionDescription;
+        public function getAboutPosition() {
+            return $this->aboutPosition;
         }
 
-        public function setAboutPositionDescription($aboutPositionDescription) {
-            $this->aboutPositionDescription = $aboutPositionDescription;
+        public function setAboutPosition($aboutPosition) {
+            $this->aboutPosition= $aboutPosition;
         }
 
         public function getNotes() {

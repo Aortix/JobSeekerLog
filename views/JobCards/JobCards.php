@@ -20,7 +20,22 @@
         <?php 
             echo "{$job->getCompanyName()} - {$job->getCompanyPosition()}";
         ?>
+        <div style="position: absolute; right: 18px; top: 12px;">
+            <i class="fas fa-pencil-alt" style="margin-right: 10px;"
+            onclick="updatingACard([
+            '<?php echo $job->getCompanyName(); ?>',
+            '<?php echo $job->getCompanyPosition(); ?>',
+            '<?php echo $job->getCompanyWebsite(); ?>',
+            '<?php echo $job->getAppliedDate(); ?>',
+            '<?php echo $job->getLocation(); ?>',
+            '<?php echo $job->getAboutCompany(); ?>',
+            '<?php echo $job->getAboutPosition(); ?>',
+            '<?php echo $job->getNotes(); ?>',])">
+            </i>
+            <i class="fas fa-trash-alt" onclick="deletingACard()"></i>
+        </div>
     </h5>
+
     <div class="card-body">
         <h5 class="card-title">Company Website</h5>
         <a href="#" class="card-link">
@@ -57,7 +72,7 @@
         <h5 class="card-title">About Position</h5>
         <p class="card-text">
             <?php 
-                echo $job->getAboutPositionDescription();
+                echo $job->getAboutPosition();
             ?>
         </p>
     </div>
