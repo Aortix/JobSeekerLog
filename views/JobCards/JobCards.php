@@ -8,7 +8,7 @@
     $jobsArray = [];
 
     foreach ($job_posts as $job_post) {
-        $jobsArray["Job" . $job_post["id"]] = new JobCard($job_post["company_name"], $job_post["company_position"], $job_post["company_website"], 
+        $jobsArray["Job" . $job_post["id"]] = new JobCard($job_post['id'], $job_post["company_name"], $job_post["company_position"], $job_post["company_website"], 
         $job_post["date_applied"], $job_post["location"], $job_post["about_company"],
         $job_post["about_position"], $job_post["notes"]);
     }
@@ -23,6 +23,7 @@
         <div style="position: absolute; right: 18px; top: 12px;">
             <i class="fas fa-pencil-alt" style="margin-right: 10px;"
             onclick="updatingACard([
+            '<?php echo $job->getId(); ?>',
             '<?php echo $job->getCompanyName(); ?>',
             '<?php echo $job->getCompanyPosition(); ?>',
             '<?php echo $job->getCompanyWebsite(); ?>',
@@ -32,7 +33,7 @@
             '<?php echo $job->getAboutPosition(); ?>',
             '<?php echo $job->getNotes(); ?>',])">
             </i>
-            <i class="fas fa-trash-alt" onclick="deletingACard()"></i>
+            <i class="fas fa-trash-alt" onclick="deletingACard('<?php echo $job->getId(); ?>')"></i>
         </div>
     </h5>
 

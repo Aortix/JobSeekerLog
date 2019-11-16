@@ -1,8 +1,9 @@
-<?php 
+<?php
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +14,12 @@
     <style type="text/css">
     </style>
 </head>
+
 <body>
     <div id="Index">
         <?php include("./views/AddingAJobPopup/AddingAJobPopup.php"); ?>
-        <?php include("./views/Header/Header.php")?>
-        <?php include("./views/JobCards/JobCards.php")?>
+        <?php include("./views/Header/Header.php") ?>
+        <?php include("./views/JobCards/JobCards.php") ?>
     </div>
     <script type="text/javascript">
         //Header Functions
@@ -39,9 +41,23 @@
         }
 
         const deletingACard = (e) => {
-            console.log(e);
-            console.log("clicked deleted");
+            fetch("./queries/deleteJob.php", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "functionName": "deleteJob",
+                    "arguments": Number(e)
+                })
+            }).then(() => {
+                console.log("Request sent");
+                window.location.reload();
+            }).catch((error) => {
+                console.log("Catch all error: ", error);
+            })
         }
     </script>
 </body>
+
 </html>

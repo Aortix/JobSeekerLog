@@ -5,5 +5,4 @@
         addJob();
     }
 
-    header("Location: http://www.localhost/JobSeekerLog/index.php");
-?>
+    header("Location: ./../index.php");

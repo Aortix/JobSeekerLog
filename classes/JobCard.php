@@ -1,5 +1,6 @@
 <?php
     class JobCard {
+        private $id;
         private $companyName;
         private $companyPosition;
         private $companyWebsite;
@@ -9,8 +10,9 @@
         private $aboutPosition;
         private $notes;
 
-        public function __construct($companyName, $companyPosition, $companyWebsite, 
+        public function __construct($id, $companyName, $companyPosition, $companyWebsite, 
         $appliedDate, $location, $aboutCompany, $aboutPosition, $notes) {
+            $this->id = $id;
             $this->companyName = $companyName;
             $this->companyPosition = $companyPosition;
             $this->companyWebsite = $companyWebsite;
@@ -19,6 +21,10 @@
             $this->aboutCompany = $aboutCompany;
             $this->aboutPosition = $aboutPosition;
             $this->notes = $notes;
+        }
+
+        public function getId() {
+            return $this->id;
         }
 
         public function getCompanyName() {
