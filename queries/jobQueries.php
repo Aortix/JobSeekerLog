@@ -74,8 +74,81 @@ function addJob()
     }
 
     $_POST = array();
+
     $stmt->close();
+
     mysqli_close($mysqli);
+}
+
+function updateJob()
+{
+    include("./../sql_connection_info.php");
+
+    $mysqli = new mysqli("localhost", $username, $password, $database_name);
+
+    if ($mysqli->connect_errno) {
+        error_log("Connect Failed:");
+        error_log(print_r($mysqli->connect_error, true));
+        var_dump($mysqli->connect_error);
+        exit();
+    }
+
+    $stmt = $mysqli->prepare("UPDATE Job_posts SET company_name=?, company_position=?, 
+    company_website=?, date_applied=?, company_location=?, about_company=?, 
+    about_position=?, notes=? WHERE id=?");
+
+    if (false === $stmt) {
+        error_log('mysqli prepare() failed: ');
+        error_log(print_r(htmlspecialchars($stmt->error), true));
+        var_dump($stmt->error);
+        exit();
+    }
+
+    $id = htmlspecialchars($_POST['updating_id']);
+    $company_name = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_name']))) ?: "N/A";
+    $company_position = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_position']))) ?: "N/A";
+    $company_website = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_website']))) ?: "N/A";
+    $date_applied = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_date_applied']))) ?: date('m/d/Y');
+    $location = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_location']))) ?: "N/A";
+    $about_company = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_about_company']))) ?: "N/A";
+    $about_position = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_about_position']))) ?: "N/A";
+    $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_notes']))) ?: "N/A";
+
+    $bind = $stmt->bind_param(
+        'ssssssssi',
+        $company_name,
+        $company_position,
+        $company_website,
+        $date_applied,
+        $location,
+        $about_company,
+        $about_position,
+        $notes,
+        $id
+    );
+
+    if (false === $bind) {
+        error_log('bind_param() failed: ');
+        error_log(print_r(htmlspecialchars($stmt->error), true));
+        var_dump($stmt->error);
+        exit();
+    }
+
+    $exec = $stmt->execute();
+
+    if (false === $exec) {
+        error_log('mysqli execute() failed: ');
+        error_log(print_r(htmlspecialchars($stmt->error), true));
+        var_dump($stmt->error);
+    }
+
+    $_POST = array();
+
+    //Close prepared statement
+    $stmt->close();
+
+    //Close db connection
+    $mysqli->close();
 }
 
 function deleteJob($jobId)
@@ -98,7 +171,11 @@ function deleteJob($jobId)
         exit();
     }
 
-    $bind = $stmt->bind_param('i', $jobId);
+    if (is_int($jobId)) {
+        $bind = $stmt->bind_param('i', $jobId);
+    } else {
+        $bind = $stmt->bind_param('i', -1);
+    }
 
     if (false === $bind) {
         error_log('bind_param() failed: ');

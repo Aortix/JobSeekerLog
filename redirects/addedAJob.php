@@ -1,8 +1,8 @@
-<?php 
-    include("./../queries/jobQueries.php");
+<?php
+include("./../queries/jobQueries.php");
 
-    if(isset($_POST['submit'])) {
-        addJob();
-    }
+if (isset($_POST['submit'])) {
+    addJob();
+}
 
-    header("Location: ./../index.php");
+header("Location: ./../index.php");

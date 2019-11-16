@@ -1,9 +1,8 @@
-<?php 
+<?php
 ?>
 
 <div id="AddingAJobPopup" style="display: none; width: 100%; height: 100%; z-index: 2; overflow-y: scroll;" class="position-fixed bg-light text-secondary border rounded p-4">
-    <i style="cursor: pointer; position: absolute; right: 20px;" class="fas fa-times fa-lg mt-1 mb-4"
-    onclick="onclickCloseAddJobForm()"></i>
+    <i style="cursor: pointer; position: absolute; right: 20px;" class="fas fa-times fa-lg mt-1 mb-4" onclick="onclickCloseAddJobForm()"></i>
     <form class="mt-4" method="post" action="redirects/addedAJob.php">
         <div class="form-group">
             <label for="company_name" class="h4">Company Name</label>
@@ -37,6 +36,6 @@
             <label for="company_notes" class="h4">Notes</label>
             <textarea class="form-control" name="company_notes" id="company_notes" rows="4" placeholder="Optional"></textarea>
         </div>
-        <input type="submit" name="submit" class="btn btn-primary"></input>
+        <input type="submit" name="submit" value="Submit" class="btn btn-primary"></input>
     </form>
 </div>
