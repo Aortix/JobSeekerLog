@@ -28,7 +28,14 @@
             if (scrollPosition !== "") {
                 window.scrollTo(0, Number(scrollPosition));
             }
+
+            document.getElementById("job-search").value = document.cookie.substring(6);
         }
+
+        const setRegexCookie = (e) => {
+            document.cookie = `regex=${e.replace(/\//, "")}`;
+        }
+
         //Header Functions
         const onclickAddJobButton = () => {
             document.body.style.overflow = "hidden";

@@ -60,11 +60,11 @@ function addJob()
 
     $id = 0;
     $timestamp;
-    $company_name = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_name']))) ?: "N/A";
-    $company_position = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_position']))) ?: "N/A";
+    $company_name = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_name'])))) ?: "N/A";
+    $company_position = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_position'])))) ?: "N/A";
     $company_website = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_website']))) ?: "N/A";
     $date_applied = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['date_applied']))) ?: date('m/d/Y');
-    $location = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_location']))) ?: "N/A";
+    $location = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_location'])))) ?: "N/A";
     $about_company = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['about_company']))) ?: "N/A";
     $about_position = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['about_position']))) ?: "N/A";
     $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_notes']))) ?: "N/A";
@@ -105,11 +105,11 @@ function updateJob()
     }
 
     $id = htmlspecialchars($_POST['updating_id']);
-    $company_name = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_name']))) ?: "N/A";
-    $company_position = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_position']))) ?: "N/A";
+    $company_name = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['updating_company_name'])))) ?: "N/A";
+    $company_position = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['updating_company_position'])))) ?: "N/A";
     $company_website = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_website']))) ?: "N/A";
     $date_applied = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_date_applied']))) ?: date('m/d/Y');
-    $location = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_location']))) ?: "N/A";
+    $location = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['updating_company_location'])))) ?: "N/A";
     $about_company = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_about_company']))) ?: "N/A";
     $about_position = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_about_position']))) ?: "N/A";
     $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_notes']))) ?: "N/A";

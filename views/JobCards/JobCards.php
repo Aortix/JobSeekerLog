@@ -2,23 +2,61 @@
 include("./classes/JobCard.php");
 include("./queries/jobQueries.php");
 
+$searchCookie = NULL;
+
+if (isset($_COOKIE["regex"])) {
+    $searchCookie = $_COOKIE["regex"];
+}
+
 //Function comes from jobQueries
 $job_posts = getJobPostings();
 
 $jobsArray = [];
 
 foreach ($job_posts as $job_post) {
-    $jobsArray["Job" . $job_post["id"]] = new JobCard(
-        $job_post['id'],
-        $job_post["company_name"],
-        $job_post["company_position"],
-        $job_post["company_website"],
-        $job_post["date_applied"],
-        $job_post["company_location"],
-        $job_post["about_company"],
-        $job_post["about_position"],
-        $job_post["notes"]
-    );
+    if (!$searchCookie || $searchCookie === "") {
+        $jobsArray["Job" . $job_post["id"]] = new JobCard(
+            $job_post['id'],
+            $job_post["company_name"],
+            $job_post["company_position"],
+            $job_post["company_website"],
+            $job_post["date_applied"],
+            $job_post["company_location"],
+            $job_post["about_company"],
+            $job_post["about_position"],
+            $job_post["notes"]
+        );
+    } else if (
+        strpos(strtoupper($job_post["company_name"]), strtoupper($searchCookie)) !== false
+        && ucfirst($job_post["company_name"][0]) === ucfirst($searchCookie[0])
+    ) {
+        $jobsArray["Job" . $job_post["id"]] = new JobCard(
+            $job_post['id'],
+            $job_post["company_name"],
+            $job_post["company_position"],
+            $job_post["company_website"],
+            $job_post["date_applied"],
+            $job_post["company_location"],
+            $job_post["about_company"],
+            $job_post["about_position"],
+            $job_post["notes"]
+        );
+    } else if (
+        strpos(strtoupper($job_post["company_position"]), strtoupper($searchCookie)) !== false
+        && ucfirst($job_post["company_position"][0]) === ucfirst($searchCookie[0])
+    ) {
+        $jobsArray["Job" . $job_post["id"]] = new JobCard(
+            $job_post['id'],
+            $job_post["company_name"],
+            $job_post["company_position"],
+            $job_post["company_website"],
+            $job_post["date_applied"],
+            $job_post["company_location"],
+            $job_post["about_company"],
+            $job_post["about_position"],
+            $job_post["notes"]
+        );
+    } else { }
 }
 ?>
 
