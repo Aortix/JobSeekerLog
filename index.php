@@ -1,4 +1,24 @@
 <?php
+include("./queries/adminQueries.php");
+
+if (isset($_POST['login_submit'])) {
+    $id = loginUser();
+    if ($id === -1 || (is_array($id) && count($id) === 0)) {
+        setcookie('id', -1);
+        setcookie('username', 'anonymous');
+        $_POST = array();
+    } else {
+        setcookie('id', $id['id']);
+        setcookie('username', $id['username']);
+        $_POST = array();
+    }
+}
+
+if (isset($_COOKIE['id'])) {
+    echo $_COOKIE['id'];
+    echo $_COOKIE['username'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +49,15 @@
                 window.scrollTo(0, Number(scrollPosition));
             }
 
-            document.getElementById("job-search").value = document.cookie.substring(6);
+            let findRegex = document.cookie.indexOf("regex");
+            if (findRegex === -1) {
+                return;
+            }
+            let regexFound = document.cookie.substring(findRegex);
+            let findEqualSign = regexFound.indexOf("=");
+            let findSemiColon = regexFound.indexOf(";") !== -1 ? regexFound.indexOf(";") : regexFound.length;
+            let valueFound = regexFound.substring(findEqualSign + 1, findSemiColon);
+            document.getElementById("job-search").value = valueFound;
         }
 
         const setRegexCookie = (e) => {
@@ -92,6 +120,14 @@
             }).catch((error) => {
                 console.log("Catch all error: ", error);
             })
+        }
+
+        const switchToRegisterPage = () => {
+            window.location.href = "./views/Pages/Register.php";
+        }
+
+        const switchToLoginPage = () => {
+            window.location.href = "./views/Pages/Login.php";
         }
     </script>
 </body>
