@@ -3,28 +3,54 @@ function getJobPostings()
 {
     include("./sql_connection_info.php");
 
-    $conn = mysqli_connect('localhost', $username, $password, $job_database);
+    $mysqli = new mysqli("localhost", $username, $password, $job_database);
 
-    if (!$conn) {
-        echo 'Connection error: ' . mysqli_connect_error();
+    if ($mysqli->connect_errno) {
+        error_log("Connect Failed:");
+        error_log(print_r($mysqli->connect_error, true));
+        exit();
     }
 
-    //Write query for all job posts
-    $sql = 'SELECT * FROM Job_posts';
+    $stmt = $mysqli->prepare("SELECT * FROM Job_posts WHERE user_identification=?");
 
-    //Make query and get result
-    $result = mysqli_query($conn, $sql);
+    if (false === $stmt) {
+        error_log('mysqli prepare() failed: ');
+        error_log(print_r(htmlspecialchars($stmt->error), true));
+        exit();
+    }
 
-    //Fetch the resulting rows as an array
-    $job_posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    if (!isset($_COOKIE['id']) || $_COOKIE['id'] === -1) {
+        return;
+    }
 
-    //Free result from memory
-    mysqli_free_result($result);
+    $user_id = $_COOKIE['id'];
 
-    //Close Connection
-    mysqli_close($conn);
+    $bind = $stmt->bind_param('s', $user_id);
 
-    return $job_posts;
+    if (false === $bind) {
+        error_log('bind_param() failed: ');
+        error_log(print_r(htmlspecialchars($stmt->error), true));
+        exit();
+    }
+
+    $exec = $stmt->execute();
+
+    if (false === $exec) {
+        error_log('mysqli execute() failed: ');
+        error_log(print_r(htmlspecialchars($stmt->error), true));
+        exit();
+    }
+
+    $res = $stmt->get_result();
+    for ($set = array(); $row = $res->fetch_assoc(); $set[] = $row);
+
+    //Close prepared statement
+    $stmt->close();
+
+    //Close db connection
+    $mysqli->close();
+
+    return $set;
 }
 
 function addJob()
@@ -38,13 +64,14 @@ function addJob()
         echo 'Connection error: ' . mysqli_connect_error();
     }
 
-    if (!($stmt = $mysqli->prepare("INSERT INTO Job_posts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
+    if (!($stmt = $mysqli->prepare("INSERT INTO Job_posts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
         echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
     }
 
     if (!$stmt->bind_param(
-        "isssssssss",
+        "issssssssss",
         $id,
+        $user_id,
         $timestamp,
         $company_name,
         $company_position,
@@ -59,10 +86,14 @@ function addJob()
     }
 
     $id = 0;
+    $user_id = $_COOKIE['id'];
     $timestamp;
     $company_name = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_name'])))) ?: "N/A";
     $company_position = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_position'])))) ?: "N/A";
-    $company_website = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_website']))) ?: "N/A";
+    $company_website = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_website'])))) ?: "N/A";
+    if ($company_website[0] !== "H" && $company_website !== "N/A") {
+        $company_website = "Https://" . $company_website;
+    }
     $date_applied = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['date_applied']))) ?: date('m/d/Y');
     $location = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_location'])))) ?: "N/A";
     $about_company = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['about_company']))) ?: "N/A";
@@ -72,8 +103,6 @@ function addJob()
     if (!$stmt->execute()) {
         echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
     }
-
-    $_POST = array();
 
     $stmt->close();
 
@@ -95,7 +124,7 @@ function updateJob()
 
     $stmt = $mysqli->prepare("UPDATE Job_posts SET company_name=?, company_position=?, 
     company_website=?, date_applied=?, company_location=?, about_company=?, 
-    about_position=?, notes=? WHERE id=?");
+    about_position=?, notes=? WHERE id=? AND user_identification=?");
 
     if (false === $stmt) {
         error_log('mysqli prepare() failed: ');
@@ -105,9 +134,13 @@ function updateJob()
     }
 
     $id = htmlspecialchars($_POST['updating_id']);
+    $user_id = htmlspecialchars($_COOKIE['id']);
     $company_name = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['updating_company_name'])))) ?: "N/A";
     $company_position = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['updating_company_position'])))) ?: "N/A";
-    $company_website = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_website']))) ?: "N/A";
+    $company_website = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['updating_company_website'])))) ?: "N/A";
+    if ($company_website[0] !== "H" && $company_website[1] !== "t" && $company_website !== "N/A") {
+        $company_website = "Https://" . $company_website;
+    }
     $date_applied = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_date_applied']))) ?: date('m/d/Y');
     $location = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['updating_company_location'])))) ?: "N/A";
     $about_company = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_about_company']))) ?: "N/A";
@@ -115,7 +148,7 @@ function updateJob()
     $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_notes']))) ?: "N/A";
 
     $bind = $stmt->bind_param(
-        'ssssssssi',
+        'ssssssssis',
         $company_name,
         $company_position,
         $company_website,
@@ -124,7 +157,8 @@ function updateJob()
         $about_company,
         $about_position,
         $notes,
-        $id
+        $id,
+        $user_id
     );
 
     if (false === $bind) {
@@ -141,8 +175,6 @@ function updateJob()
         error_log(print_r(htmlspecialchars($stmt->error), true));
         var_dump($stmt->error);
     }
-
-    $_POST = array();
 
     //Close prepared statement
     $stmt->close();
@@ -163,7 +195,7 @@ function deleteJob($jobId)
         exit();
     }
 
-    $stmt = $mysqli->prepare("DELETE FROM Job_posts WHERE id = ?");
+    $stmt = $mysqli->prepare("DELETE FROM Job_posts WHERE id = ? AND user_identification=?");
 
     if (false === $stmt) {
         error_log('mysqli prepare() failed: ');
@@ -171,10 +203,12 @@ function deleteJob($jobId)
         exit();
     }
 
+    $user_id = $_COOKIE['id'];
+
     if (is_int($jobId)) {
-        $bind = $stmt->bind_param('i', $jobId);
+        $bind = $stmt->bind_param('is', $jobId, $user_id);
     } else {
-        $bind = $stmt->bind_param('i', -1);
+        $bind = $stmt->bind_param('is', -1, $user_id);
     }
 
     if (false === $bind) {

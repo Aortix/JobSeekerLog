@@ -33,11 +33,7 @@
 
 <body>
     <div class="register_main_container">
-        <div style="display: flex; justify-content: flex-end; align-items: center;" class="pt-3 pr-4 pb-3 border-bottom">
-            <h4 style="margin-right: auto; margin-bottom: 0px; padding-left: 15px; cursor: pointer;" onclick="switchToMainPage()">Job Seeker's Log</h4>
-            <button type="button" class="btn btn-dark" onclick="switchToRegisterPage()">Register</button>
-            <button type="button" class="btn btn-outline-dark ml-2" onclick="switchToLoginPage()">Login</button>
-        </div>
+        <?php include("./../NavBar/NavBar.php") ?>
         <div class="register_form_container p-4 border">
             <h2 class="p-3 mb-2 bg-dark text-white">Register</h2>
             <form method="post" action="./../../redirects/register.php">

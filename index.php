@@ -7,17 +7,16 @@ if (isset($_POST['login_submit'])) {
         setcookie('id', -1);
         setcookie('username', 'anonymous');
         $_POST = array();
+        header("Refresh:0");
     } else {
         setcookie('id', $id['id']);
         setcookie('username', $id['username']);
         $_POST = array();
+        header("Refresh:0");
     }
 }
 
-if (isset($_COOKIE['id'])) {
-    echo $_COOKIE['id'];
-    echo $_COOKIE['username'];
-}
+if (isset($_COOKIE['id'])) { }
 
 ?>
 
@@ -39,6 +38,7 @@ if (isset($_COOKIE['id'])) {
     <div id="Index">
         <?php include("./views/AddingAJobPopup/AddingAJobPopup.php"); ?>
         <?php include("./views/UpdatingAJobPopup/UpdatingAJobPopup.php"); ?>
+        <?php include("./views/NavBar/NavBar.php"); ?>
         <?php include("./views/Header/Header.php") ?>
         <?php include("./views/JobCards/JobCards.php") ?>
     </div>
@@ -62,6 +62,12 @@ if (isset($_COOKIE['id'])) {
 
         const setRegexCookie = (e) => {
             document.cookie = `regex=${e.replace(/\//, "")}`;
+        }
+
+        const user_logout = () => {
+            document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=./index.php;";
+            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=./index.php;";
+            window.location.reload();
         }
 
         //Header Functions
@@ -128,6 +134,10 @@ if (isset($_COOKIE['id'])) {
 
         const switchToLoginPage = () => {
             window.location.href = "./views/Pages/Login.php";
+        }
+
+        const switchToMainPage = () => {
+            window.location.href = "./index.php";
         }
     </script>
 </body>

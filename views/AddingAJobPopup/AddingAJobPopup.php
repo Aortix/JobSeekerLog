@@ -5,8 +5,8 @@
     <i style="cursor: pointer; position: absolute; right: 20px;" class="fas fa-times fa-lg mt-1 mb-4" onclick="onclickCloseAddJobForm()"></i>
     <form class="mt-4" method="post" action="redirects/addedAJob.php">
         <div class="form-group">
-            <label for="company_name" class="h4">Company Name</label>
-            <input required type="text" class="form_control" name="company_name" id="company_name" placeholder="Required">
+            <label for="company_name" style="display: block;" class="h4">Company Name</label>
+            <input required type="text" style="width: 100%; padding: 6px 12px; color: #495057; border: 1px solid #ced4da; border-radius: .25rem;" name="company_name" id="company_name" placeholder="Required">
         </div>
         <div class="form-group">
             <label for="company_position" class="h4">Position</label>

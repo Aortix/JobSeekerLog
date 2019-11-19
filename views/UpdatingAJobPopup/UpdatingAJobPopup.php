@@ -8,7 +8,7 @@
         <input type="hidden" name="updating_scroll" id="updating_scroll">
         <div class="form-group">
             <label for="updating_company_name" class="h4">Company Name</label>
-            <input required type="text" class="form_control" name="updating_company_name" id="updating_company_name" placeholder="Required">
+            <input required type="text" style="width: 100%; padding: 6px 12px; color: #495057; border: 1px solid #ced4da; border-radius: .25rem;" name="updating_company_name" id="updating_company_name" placeholder="Required">
         </div>
         <div class="form-group">
             <label for="updating_company_position" class="h4">Position</label>
