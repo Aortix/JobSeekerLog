@@ -3,7 +3,7 @@ function getJobPostings()
 {
     include("./sql_connection_info.php");
 
-    $mysqli = new mysqli("localhost", $username, $password, $job_database);
+    $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
 
     if ($mysqli->connect_errno) {
         error_log("Connect Failed:");
@@ -58,7 +58,7 @@ function addJob()
     include("./../sql_connection_info.php");
 
     //Variables are coming from the sql_connection_info.php file
-    $mysqli = mysqli_connect('localhost', $username, $password, $job_database);
+    $mysqli = mysqli_connect('localhost', $database_username, $database_password, $database_table_name);
 
     if (!$mysqli) {
         echo 'Connection error: ' . mysqli_connect_error();
@@ -113,7 +113,7 @@ function updateJob()
 {
     include("./../sql_connection_info.php");
 
-    $mysqli = new mysqli("localhost", $username, $password, $job_database);
+    $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
 
     if ($mysqli->connect_errno) {
         error_log("Connect Failed:");
@@ -187,7 +187,7 @@ function deleteJob($jobId)
 {
     include("./../sql_connection_info.php");
 
-    $mysqli = new mysqli("localhost", $username, $password, $job_database);
+    $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
 
     if ($mysqli->connect_errno) {
         error_log("Connect Failed:");

@@ -62,15 +62,14 @@ if (isset($job_posts)) {
 } else { }
 ?>
 
-<?php if (count($jobsArray) > 0) {
-    foreach ($jobsArray as $job) { ?>
-        <div class="card" style="width: 90%; margin: 30px auto">
-            <h5 class="card-header" style="cursor: pointer">
-                <?php
-                        echo "{$job->getCompanyName()} - {$job->getCompanyPosition()}";
-                        ?>
-                <div style="position: absolute; right: 18px; top: 12px;">
-                    <i class="fas fa-pencil-alt" style="margin-right: 10px;" onclick="updatingACard({
+<?php foreach ($jobsArray as $job) { ?>
+    <div class="card" style="width: 90%; margin: 30px auto">
+        <h5 class="card-header" style="cursor: pointer">
+            <?php
+                echo "{$job->getCompanyName()} - {$job->getCompanyPosition()}";
+                ?>
+            <div style="position: absolute; right: 18px; top: 12px;">
+                <i class="fas fa-pencil-alt" style="margin-right: 10px;" onclick="updatingACard({
                 id: '<?php echo $job->getId(); ?>',
                 company_name: '<?php echo $job->getCompanyName(); ?>',
                 company_position: '<?php echo $job->getCompanyPosition(); ?>',
@@ -80,63 +79,58 @@ if (isset($job_posts)) {
                 about_company: '<?php echo $job->getAboutCompany(); ?>',
                 about_position: '<?php echo $job->getAboutPosition(); ?>',
                 company_notes: '<?php echo $job->getNotes(); ?>',})">
-                    </i>
-                    <i class="fas fa-trash-alt" onclick="deletingACard('<?php echo $job->getId(); ?>')"></i>
-                </div>
-            </h5>
+                </i>
+                <i class="fas fa-trash-alt" onclick="deletingACard('<?php echo $job->getId(); ?>')"></i>
+            </div>
+        </h5>
 
-            <div class="card-body">
-                <h5 class="card-title">Company Website</h5>
-                <a class="card-link" href="<?php echo $job->getCompanyWebsite() ?>" rel="noopener noreferrer" target="_blank">
-                    <?php
-                            echo $job->getCompanyWebsite();
-                            ?>
-                </a>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Date Applied</h5>
-                <p class="card-text">
-                    <?php
-                            echo $job->getAppliedDate();
-                            ?>
-                </p>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Location</h5>
-                <p class="card-text">
-                    <?php
-                            echo $job->getLocation();
-                            ?>
-                </p>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">About Company</h5>
-                <p class="card-text">
-                    <?php
-                            echo $job->getAboutCompany();
-                            ?>
-                </p>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">About Position</h5>
-                <p class="card-text">
-                    <?php
-                            echo $job->getAboutPosition();
-                            ?>
-                </p>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Notes</h5>
-                <p class="card-text">
-                    <?php
-                            echo $job->getNotes();
-                            ?>
-                </p>
-            </div>
+        <div class="card-body">
+            <h5 class="card-title">Company Website</h5>
+            <a class="card-link" href="<?php echo $job->getCompanyWebsite() ?>" rel="noopener noreferrer" target="_blank">
+                <?php
+                    echo $job->getCompanyWebsite();
+                    ?>
+            </a>
         </div>
-    <?php }
-    } else { ?>
-    <div style="margin: 70px auto; max-width: 900px; font-size: 28px" class="alert alert-primary text-center" role="alert">
-        No jobs posted yet, why don't you add one now?
+        <div class="card-body">
+            <h5 class="card-title">Date Applied</h5>
+            <p class="card-text">
+                <?php
+                    echo $job->getAppliedDate();
+                    ?>
+            </p>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Location</h5>
+            <p class="card-text">
+                <?php
+                    echo $job->getLocation();
+                    ?>
+            </p>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About Company</h5>
+            <p class="card-text">
+                <?php
+                    echo $job->getAboutCompany();
+                    ?>
+            </p>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About Position</h5>
+            <p class="card-text">
+                <?php
+                    echo $job->getAboutPosition();
+                    ?>
+            </p>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Notes</h5>
+            <p class="card-text">
+                <?php
+                    echo $job->getNotes();
+                    ?>
+            </p>
+        </div>
     </div>
 <?php } ?>

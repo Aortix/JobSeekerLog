@@ -22,7 +22,7 @@
 
         .login_form_container {
             width: 50%;
-            height: 360px;
+            min-height: 360px;
             margin-right: auto;
             margin-left: auto;
             position: relative;

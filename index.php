@@ -35,12 +35,15 @@ if (isset($_COOKIE['id'])) { }
 </head>
 
 <body onload="onloadFunction()">
-    <div id="Index">
+    <div id="Index" style="min-height: 95vh;">
         <?php include("./views/AddingAJobPopup/AddingAJobPopup.php"); ?>
         <?php include("./views/UpdatingAJobPopup/UpdatingAJobPopup.php"); ?>
         <?php include("./views/NavBar/NavBar.php"); ?>
         <?php include("./views/Header/Header.php") ?>
         <?php include("./views/JobCards/JobCards.php") ?>
+    </div>
+    <div style="min-height: 5vh;">
+        <?php include("./views/Footer/Footer.php") ?>
     </div>
     <script type="text/javascript">
         const onloadFunction = () => {
