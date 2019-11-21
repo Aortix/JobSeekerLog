@@ -77,11 +77,13 @@ if (isset($job_posts)) {
 ?>
 
 <?php foreach ($jobsArray as $job) { ?>
-    <div class="card" style="width: 90%; margin: 30px auto">
-        <h5 class="card-header" style="cursor: pointer">
-            <?php
-                echo "{$job->getCompanyName()} - {$job->getCompanyPosition()}";
-                ?>
+    <div class="card" style="width: 90%; max-width: 1000px; margin: 30px auto">
+        <div class="card-header" style="cursor: pointer">
+            <h5 style="width: 82%;">
+                <?php
+                    echo "{$job->getCompanyName()} - {$job->getCompanyPosition()}";
+                    ?>
+            </h5>
             <div style="position: absolute; right: 18px; top: 12px;">
                 <i class="fas fa-pencil-alt" style="margin-right: 10px;" onclick="updatingACard({
                 id: '<?php echo $job->getId(); ?>',
@@ -96,7 +98,7 @@ if (isset($job_posts)) {
                 </i>
                 <i class="fas fa-trash-alt" onclick="deletingACard('<?php echo $job->getId(); ?>')"></i>
             </div>
-        </h5>
+        </div>
 
         <div class="card-body">
             <h5 class="card-title">Company Website</h5>

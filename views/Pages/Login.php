@@ -22,12 +22,36 @@ session_start();
         }
 
         .login_form_container {
-            width: 50%;
+            width: 85%;
+            max-width: 650px;
             min-height: 360px;
             margin-right: auto;
             margin-left: auto;
             position: relative;
-            margin-top: 100px;
+            margin-top: 40px;
+        }
+
+        .navbar_container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-right: 0;
+        }
+
+        @media only screen and (min-width: 650px) {
+            .navbar_container {
+                flex-direction: row;
+                justify-content: flex-end;
+                padding-right: 15px;
+            }
+
+            .navbar_title {
+                margin-right: auto;
+                margin-bottom: 0px;
+                padding-left: 15px;
+                cursor: pointer;
+            }
         }
     </style>
 </head>
@@ -66,7 +90,7 @@ session_start();
                 </form>
             </div>
         </div>
-        <div style="min-height: 5vh;">
+        <div style="min-height: 5vh; margin-top: 40px;">
             <?php include("./../Footer/Footer.php") ?>
         </div>
     </div>

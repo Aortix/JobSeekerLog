@@ -39,6 +39,51 @@ if (isset($_POST['login_submit'])) {
     <script src="https://kit.fontawesome.com/7e63e75969.js" crossorigin="anonymous"></script>
     <title>Job Seeker's Log</title>
     <style type="text/css">
+        .navbar_container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-right: 0;
+        }
+
+        .searchbar_submit_button {
+            padding-top: 25px;
+            padding-bottom: 25px;
+            margin-bottom: 10px;
+        }
+
+        .adding_job_popup {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            overflow-y: scroll;
+        }
+
+        @media only screen and (min-width: 600px) {
+            .searchbar_submit_button {
+                padding-top: 20px;
+                padding-bottom: 20px;
+                margin-bottom: 0px;
+            }
+        }
+
+        @media only screen and (min-width: 650px) {
+            .navbar_container {
+                flex-direction: row;
+                justify-content: flex-end;
+                padding-right: 15px;
+            }
+
+            .navbar_title {
+                margin-right: auto;
+                margin-bottom: 0px;
+                padding-left: 15px;
+                cursor: pointer;
+            }
+        }
     </style>
 </head>
 
@@ -78,6 +123,11 @@ if (isset($_POST['login_submit'])) {
         const user_logout = () => {
             document.cookie = "login_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=./index.php;";
             document.cookie = "login_username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=./index.php;";
+            window.location.reload();
+        }
+
+        const clearSearchBar = () => {
+            document.cookie = "regex=";
             window.location.reload();
         }
 

@@ -1,16 +1,16 @@
 <?php
 ?>
-<div style="width: 100%;">
+<div>
     <h1 class="display-4 text-center text-dark pt-4">
-        Job Seeker's Log
+        Store your records here.
     </h1>
-    <p class="text-muted text-center">Record your job search.</p>
+    <p class="text-muted text-center">All in once place.</p>
     <?php include("./views/SearchBar/SearchBar.php") ?>
-    <div class="text-center mt-4 mb-2">
+    <div class="text-center mt-3 mb-2">
         <button type="button" class="btn btn-outline-primary" onclick="onclickAddJobButton();">Add Job</button>
     </div>
     <?php if (!isset($_COOKIE['login_id']) || !isset($_COOKIE['login_username'])) { ?>
-        <div style="margin: 30px auto; font-size: 16px; width: 400px;" class="alert alert-danger text-center" role="alert">
+        <div style="margin: 30px auto; font-size: 16px; max-width: 400px;" class="alert alert-danger text-center" role="alert">
             You must register and login before adding a job.
         </div>
     <?php } ?>
