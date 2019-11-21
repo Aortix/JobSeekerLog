@@ -1,4 +1,5 @@
 <?php
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -33,20 +34,40 @@
 
 <body>
     <div class="login_main_container">
-        <?php include("./../NavBar/NavBar.php") ?>
-        <div class="login_form_container p-4 border">
-            <h2 class="p-3 mb-2 bg-dark text-white">Login</h2>
-            <form method="post" action="./../../index.php">
-                <div class="form-group">
-                    <label for="login_username" class="mt-2">Username</label>
-                    <input type="text" class="form-control" name="login_username" id="login_username" placeholder="Enter username">
-                </div>
-                <div class="form-group">
-                    <label for="login_password" class="mt-1">Password</label>
-                    <input type="password" class="form-control" name="login_password" id="login_password" placeholder="Password">
-                </div>
-                <input type="submit" value="Login" name="login_submit" class="btn btn-outline-primary mt-2"></input>
-            </form>
+        <div style="min-height: 95vh;">
+            <?php include("./../NavBar/NavBar.php") ?>
+            <div class="login_form_container p-4 border">
+                <h2 class="p-3 mb-2 bg-dark text-white">Login</h2>
+                <form method="post" action="./../../index.php">
+                    <div class="form-group">
+                        <label for="login_username" class="mt-2">Username</label>
+                        <input type="text" class="form-control" name="login_username" id="login_username" placeholder="Enter username">
+                        <?php if (isset($_SESSION['login_username_error'])) { ?>
+                            <div class="alert alert-danger mt-2 mb-1 p-2" style="display: inline-block; font-size: 15px;" role="alert">
+                                <?php echo $_SESSION['login_username_error']; ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="login_password" class="mt-1">Password</label>
+                        <input type="password" class="form-control" name="login_password" id="login_password" placeholder="Password">
+                        <?php if (isset($_SESSION['login_password_error'])) { ?>
+                            <div class="alert alert-danger mt-2 mb-1 p-2" style="display: inline-block; font-size: 15px;" role="alert">
+                                <?php echo $_SESSION['login_password_error']; ?>
+                            </div>
+                        <?php } ?>
+                        <?php if (isset($_SESSION['login_misc_error'])) { ?>
+                            <div class="alert alert-danger mt-2 mb-1 p-2" style="display: inline-block; font-size: 15px;" role="alert">
+                                <?php echo $_SESSION['login_misc_error']; ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <input type="submit" value="Login" name="login_submit" class="btn btn-outline-primary mt-2"></input>
+                </form>
+            </div>
+        </div>
+        <div style="min-height: 5vh;">
+            <?php include("./../Footer/Footer.php") ?>
         </div>
     </div>
     <script type="text/javascript">

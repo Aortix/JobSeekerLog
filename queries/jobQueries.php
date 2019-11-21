@@ -11,7 +11,7 @@ function getJobPostings()
         exit();
     }
 
-    $stmt = $mysqli->prepare("SELECT * FROM Job_posts WHERE user_identification=?");
+    $stmt = $mysqli->prepare("SELECT * FROM Job_posts WHERE user_identification=? ORDER BY post_timestamp DESC");
 
     if (false === $stmt) {
         error_log('mysqli prepare() failed: ');
@@ -19,11 +19,11 @@ function getJobPostings()
         exit();
     }
 
-    if (!isset($_COOKIE['id']) || $_COOKIE['id'] === -1) {
+    if (!isset($_COOKIE['login_id'])) {
         return;
     }
 
-    $user_id = $_COOKIE['id'];
+    $user_id = $_COOKIE['login_id'];
 
     $bind = $stmt->bind_param('s', $user_id);
 
@@ -86,7 +86,7 @@ function addJob()
     }
 
     $id = 0;
-    $user_id = $_COOKIE['id'];
+    $user_id = $_COOKIE['login_id'];
     $timestamp;
     $company_name = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_name'])))) ?: "N/A";
     $company_position = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_position'])))) ?: "N/A";
@@ -134,7 +134,7 @@ function updateJob()
     }
 
     $id = htmlspecialchars($_POST['updating_id']);
-    $user_id = htmlspecialchars($_COOKIE['id']);
+    $user_id = htmlspecialchars($_COOKIE['login_id']);
     $company_name = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['updating_company_name'])))) ?: "N/A";
     $company_position = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['updating_company_position'])))) ?: "N/A";
     $company_website = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['updating_company_website'])))) ?: "N/A";
@@ -203,7 +203,7 @@ function deleteJob($jobId)
         exit();
     }
 
-    $user_id = $_COOKIE['id'];
+    $user_id = $_COOKIE['login_id'];
 
     if (is_int($jobId)) {
         $bind = $stmt->bind_param('is', $jobId, $user_id);

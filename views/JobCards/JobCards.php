@@ -29,34 +29,48 @@ if (isset($job_posts)) {
             );
         } else if (
             strpos(strtoupper($job_post["company_name"]), strtoupper($searchCookie)) !== false
-            && ucfirst($job_post["company_name"][0]) === ucfirst($searchCookie[0])
         ) {
-            $jobsArray["Job" . $job_post["id"]] = new JobCard(
-                $job_post['id'],
-                $job_post["company_name"],
-                $job_post["company_position"],
-                $job_post["company_website"],
-                $job_post["date_applied"],
-                $job_post["company_location"],
-                $job_post["about_company"],
-                $job_post["about_position"],
-                $job_post["notes"]
-            );
+            $arrayFromString = explode(" ", $job_post["company_name"]);
+            $indexOfFirstCharacter = -1;
+            foreach ($arrayFromString as $individualStrings) {
+                $indexOfFirstCharacter = strpos(strtoupper($individualStrings), strtoupper($searchCookie));
+                if ($indexOfFirstCharacter === 0) {
+                    $jobsArray["Job" . $job_post["id"]] = new JobCard(
+                        $job_post['id'],
+                        $job_post["company_name"],
+                        $job_post["company_position"],
+                        $job_post["company_website"],
+                        $job_post["date_applied"],
+                        $job_post["company_location"],
+                        $job_post["about_company"],
+                        $job_post["about_position"],
+                        $job_post["notes"]
+                    );
+                    break;
+                }
+            }
         } else if (
             strpos(strtoupper($job_post["company_position"]), strtoupper($searchCookie)) !== false
-            && ucfirst($job_post["company_position"][0]) === ucfirst($searchCookie[0])
         ) {
-            $jobsArray["Job" . $job_post["id"]] = new JobCard(
-                $job_post['id'],
-                $job_post["company_name"],
-                $job_post["company_position"],
-                $job_post["company_website"],
-                $job_post["date_applied"],
-                $job_post["company_location"],
-                $job_post["about_company"],
-                $job_post["about_position"],
-                $job_post["notes"]
-            );
+            $arrayFromString = explode(" ", $job_post["company_position"]);
+            $indexOfFirstCharacter = -1;
+            foreach ($arrayFromString as $individualStrings) {
+                $indexOfFirstCharacter = strpos(strtoupper($individualStrings), strtoupper($searchCookie));
+                if ($indexOfFirstCharacter === 0) {
+                    $jobsArray["Job" . $job_post["id"]] = new JobCard(
+                        $job_post['id'],
+                        $job_post["company_name"],
+                        $job_post["company_position"],
+                        $job_post["company_website"],
+                        $job_post["date_applied"],
+                        $job_post["company_location"],
+                        $job_post["about_company"],
+                        $job_post["about_position"],
+                        $job_post["notes"]
+                    );
+                    break;
+                }
+            }
         } else { }
     }
 } else { }

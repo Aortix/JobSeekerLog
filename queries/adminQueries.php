@@ -87,7 +87,7 @@ function registerUser()
 
 function loginUser()
 {
-    include('./../vendor/autoload.php');
+    include('./vendor/autoload.php');
 
     //Validation
     $username = trim(htmlspecialchars($_POST['login_username']));
@@ -161,8 +161,8 @@ function loginUser()
     $valueToReturn = NULL;
 
     while ($stmt->fetch()) {
-        $valueToReturn['id'] = $id;
-        $valueToReturn['username'] = $user_username;
+        $valueToReturn['login_id'] = $id;
+        $valueToReturn['login_username'] = $user_username;
     }
 
     $stmt->close();

@@ -2,21 +2,29 @@
 include("./queries/adminQueries.php");
 
 if (isset($_POST['login_submit'])) {
-    $id = loginUser();
-    if ($id === -1 || (is_array($id) && count($id) === 0)) {
-        setcookie('id', -1);
-        setcookie('username', 'anonymous');
+    $userData = loginUser();
+    session_start();
+    if (isset($userData['login_id']) && isset($userData['login_username'])) {
         $_POST = array();
+        setcookie('login_id', $userData['login_id']);
+        setcookie('login_username', $userData['login_username']);
+        foreach ($_SESSION as $variable) {
+            $variable = NULL;
+        }
         header("Refresh:0");
+    } else if ($userData === NULL) {
+        $_POST = array();
+        $_SESSION['login_username_error'] = "Username or Password is wrong.";
+        $_SESSION['login_password_error'] = "Username or Password is wrong.";
+        header("Location: ./views/Pages/Login.php");
     } else {
-        setcookie('id', $id['id']);
-        setcookie('username', $id['username']);
         $_POST = array();
-        header("Refresh:0");
+        $_SESSION['login_username_error'] = $userData['username'];
+        $_SESSION['login_password_error'] = $userData['password'];
+        $_SESSION['login_misc_error'] = $userData['misc'];
+        header("Location: ./views/Pages/Login.php");
     }
 }
-
-if (isset($_COOKIE['id'])) { }
 
 ?>
 
@@ -68,8 +76,8 @@ if (isset($_COOKIE['id'])) { }
         }
 
         const user_logout = () => {
-            document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=./index.php;";
-            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=./index.php;";
+            document.cookie = "login_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=./index.php;";
+            document.cookie = "login_username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=./index.php;";
             window.location.reload();
         }
 
@@ -124,7 +132,6 @@ if (isset($_COOKIE['id'])) { }
                     "arguments": Number(e)
                 })
             }).then(() => {
-                console.log("Request sent");
                 window.location.reload();
             }).catch((error) => {
                 console.log("Catch all error: ", error);

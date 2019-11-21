@@ -9,7 +9,7 @@
     <div class="text-center mt-4 mb-2">
         <button type="button" class="btn btn-outline-primary" onclick="onclickAddJobButton();">Add Job</button>
     </div>
-    <?php if (!isset($_COOKIE['id']) || !isset($_COOKIE['username']) || $_COOKIE['id'] === -1) { ?>
+    <?php if (!isset($_COOKIE['login_id']) || !isset($_COOKIE['login_username'])) { ?>
         <div style="margin: 30px auto; font-size: 16px; width: 400px;" class="alert alert-danger text-center" role="alert">
             You must register and login before adding a job.
         </div>
