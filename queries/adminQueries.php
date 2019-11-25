@@ -137,7 +137,7 @@ function loginUser()
     if ($_SESSION['login_attempts'] > 4) {
         if (isset($_SESSION['block_login_attempts'])) {
             $timePassed = time() - $_SESSION['block_login_attempts'];
-            if ($timePassed > 60) {
+            if ($timePassed > 600) {
                 session_unset();
                 session_destroy();
             } else {
