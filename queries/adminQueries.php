@@ -6,10 +6,52 @@ function registerUser()
 {
     include('./../vendor/autoload.php');
 
-    //Validation
+    $errors = array("isError" => false);
+
+    if (isset($_POST['g-recaptcha-response'])) {
+        $url = "https://www.google.com/recaptcha/api/siteverify";
+        $data = array(
+            'secret' => '6Lf6XMQUAAAAAH4lyf_gVtqWY7SQ3GgybA6Kxs8T',
+            'response' => $_POST['g-recaptcha-response'],
+        );
+        $options = array('http' => array(
+            'method' => 'POST',
+            'content' => http_build_query($data),
+        ));
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        if ($result === FALSE) {
+            $errors['misc'] = "Something went wrong with validating the recaptcha.";
+            $errors['isError'] = true;
+            return $errors;
+        } else {
+            $resultDecoded = json_decode($result, true);
+            if ($resultDecoded["success"] === false) {
+                $errors['misc'] = "Invalid recaptcha.";
+                $errors['isError'] = true;
+                return $errors;
+            }
+        }
+    } else {
+        $errors['misc'] = "Invalid recaptcha";
+        $errors['isError'] = true;
+        return $errors;
+    }
+
+    if (!isset($_POST['register_username'])) {
+        $errors['username'] = "Error registering username.";
+        $errors['isError'] = true;
+        return $errors;
+    }
+    if (!isset($_POST['register_password'])) {
+        $errors['password'] = "Error registering password.";
+        $errors['isError'] = true;
+        return $errors;
+    }
+
     $username = trim(htmlspecialchars($_POST['register_username']));
     $password = trim(htmlspecialchars($_POST['register_password']));
-    $errors = array("isError" => false);
+
 
     if (!v::stringType()->validate($username) || !v::alnum()->validate($username) || $username === "") {
         $errors['username'] = 'Username is not valid.';
@@ -41,8 +83,6 @@ function registerUser()
     $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
 
     if ($mysqli->connect_errno) {
-        error_log("Connect Failed:");
-        error_log(print_r($mysqli->connect_error, true));
         $errors['misc'] = "Connect Failed";
         $errors['isError'] = true;
         return $errors;
@@ -51,8 +91,6 @@ function registerUser()
     $stmt = $mysqli->prepare("INSERT INTO Users VALUES (?, ?, ?, ?)");
 
     if (false === $stmt) {
-        error_log('mysqli prepare() failed: ');
-        error_log(print_r(htmlspecialchars($stmt->error), true));
         $errors['misc'] = "Prepare failed.";
         $errors['isError'] = true;
         return $errors;
@@ -65,14 +103,12 @@ function registerUser()
         $password,
         $timestamp
     )) {
-        error_log("Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error);
         $errors['misc'] = "Binding parameters failed";
         $errors['isError'] = true;
         return $errors;
     }
 
     if (!$stmt->execute()) {
-        error_log("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
         $errors['misc'] = "Execute Failed";
         $errors['isError'] = true;
         return $errors;
@@ -90,9 +126,46 @@ function loginUser()
     include('./vendor/autoload.php');
 
     //Validation
+    $errors = array("isError" => false);
+
+    if (!isset($_SESSION['login_attempts'])) {
+        $_SESSION['login_attempts'] = 1;
+    } else {
+        $_SESSION['login_attempts'] += 1;
+    }
+
+    if ($_SESSION['login_attempts'] > 4) {
+        if (isset($_SESSION['block_login_attempts'])) {
+            $timePassed = time() - $_SESSION['block_login_attempts'];
+            if ($timePassed > 60) {
+                session_unset();
+                session_destroy();
+            } else {
+                $errors['misc'] = "Too many incorrect login attempts. Try again later.";
+                $errors['isError'] = true;
+                return $errors;
+            }
+        } else {
+            $_SESSION['block_login_attempts'] = time();
+            $errors['misc'] = "Too many incorrect login attempts. Try again later.";
+            $errors['isError'] = true;
+            return $errors;
+        }
+    }
+
+    if (!isset($_POST['login_username'])) {
+        $errors['username'] = "Error registering username.";
+        $errors['isError'] = true;
+        return $errors;
+    }
+    if (!isset($_POST['login_password'])) {
+        $errors['password'] = "Error registering password.";
+        $errors['isError'] = true;
+        return $errors;
+    }
+
     $username = trim(htmlspecialchars($_POST['login_username']));
     $password = trim(htmlspecialchars($_POST['login_password']));
-    $errors = array("isError" => false);
 
     if (!v::stringType()->validate($username) || !v::alnum()->validate($username) || $username === "") {
         $errors['username'] = 'Username is not valid.';
@@ -121,8 +194,6 @@ function loginUser()
     $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
 
     if ($mysqli->connect_errno) {
-        error_log("Connect Failed:");
-        error_log(print_r($mysqli->connect_error, true));
         $errors['misc'] = "Connect Failed";
         $errors['isError'] = true;
         return $errors;
@@ -131,8 +202,6 @@ function loginUser()
     $stmt = $mysqli->prepare("SELECT id, user_username FROM Users WHERE user_username=? AND user_password=?");
 
     if (false === $stmt) {
-        error_log('mysqli prepare() failed: ');
-        error_log(print_r(htmlspecialchars($stmt->error), true));
         $errors['misc'] = "Prepare Failed";
         $errors['isError'] = true;
         return $errors;
@@ -150,7 +219,6 @@ function loginUser()
     }
 
     if (!$stmt->execute()) {
-        error_log("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
         $errors['misc'] = "Execute Failed";
         $errors['isError'] = true;
         return $errors;
@@ -168,6 +236,9 @@ function loginUser()
     $stmt->close();
 
     $mysqli->close();
+
+    $_SESSION['login_attempts'] = 0;
+    $_SESSION['block_login_attempts'] = NULL;
 
     return $valueToReturn;
 }

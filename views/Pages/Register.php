@@ -54,6 +54,7 @@ session_start();
             }
         }
     </style>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -88,6 +89,8 @@ session_start();
                             </div>
                         <?php } ?>
                     </div>
+                    <div class="g-recaptcha" data-sitekey="6Lf6XMQUAAAAAMLwxgZonuejdpZSBjJhATwjyPGq"></div>
+                    <br />
                     <input type="submit" value="Register" name="register_submit" class="btn btn-outline-primary mt-2"></input>
                 </form>
             </div>

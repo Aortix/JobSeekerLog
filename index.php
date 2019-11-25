@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("./queries/adminQueries.php");
 
 if (isset($_POST['login_submit'])) {
@@ -100,6 +101,9 @@ if (isset($_POST['login_submit'])) {
     </div>
     <script type="text/javascript">
         const onloadFunction = () => {
+            let amountOfColumns = window.localStorage.getItem("columns");
+            amountOfColumns === null ? window.localStorage.setItem("columns", 1) :
+                document.getElementById("jobCards").style.gridTemplateColumns = `repeat(${amountOfColumns}, 1fr)`;
             let scrollPosition = window.location.search.substring(3);
             if (scrollPosition !== "") {
                 window.scrollTo(0, Number(scrollPosition));
@@ -129,6 +133,11 @@ if (isset($_POST['login_submit'])) {
         const clearSearchBar = () => {
             document.cookie = "regex=";
             window.location.reload();
+        }
+
+        const changeColumnsShown = (number) => {
+            document.getElementById("jobCards").style.gridTemplateColumns = `repeat(${number}, 1fr)`;
+            window.localStorage.setItem("columns", number);
         }
 
         //Header Functions
