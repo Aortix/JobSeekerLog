@@ -8,7 +8,7 @@ function registerUser()
 
     $errors = array("isError" => false);
 
-    $dotenv = Dotenv\Dotenv::create("./..");
+    $dotenv = Dotenv\Dotenv::create(__DIR__);
     $dotenv->load();
 
     if (isset($_POST['g-recaptcha-response'])) {
