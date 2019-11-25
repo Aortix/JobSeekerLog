@@ -8,10 +8,13 @@ function registerUser()
 
     $errors = array("isError" => false);
 
+    $dotenv = Dotenv\Dotenv::create("./..");
+    $dotenv->load();
+
     if (isset($_POST['g-recaptcha-response'])) {
         $url = "https://www.google.com/recaptcha/api/siteverify";
         $data = array(
-            'secret' => '6Lf6XMQUAAAAAH4lyf_gVtqWY7SQ3GgybA6Kxs8T',
+            'secret' => $_SERVER['RECAPTCHA'],
             'response' => $_POST['g-recaptcha-response'],
         );
         $options = array('http' => array(
@@ -77,9 +80,6 @@ function registerUser()
 
     $id = uniqid();
     $timestamp = NULL;
-
-    $dotenv = Dotenv\Dotenv::create("./..");
-    $dotenv->load();
 
     $mysqli = new mysqli("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
