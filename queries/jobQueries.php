@@ -68,6 +68,72 @@ function getJobPostings()
     return $set;
 }
 
+function getCountOfUsersTotalJobPostings()
+{
+    include('./../vendor/autoload.php');
+
+    $errors = array("isError" => false);
+
+    if (!isset($_COOKIE['login_id'])) {
+        $errors['job_postings'] = "Error getting the User id.";
+        $errors['isError'] = true;
+        return $errors;
+    }
+
+    $user_id = trim(htmlspecialchars($_COOKIE['login_id']));
+
+    if (!v::stringType()->validate($user_id) || !v::alnum()->validate($user_id)) {
+        $errors['job_postings'] = "The User ID is not valid.";
+        $errors['isError'] = true;
+        return $errors;
+    }
+
+    include("./../sql_connection_info.php");
+
+    $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
+
+    if ($mysqli->connect_errno) {
+        $errors['job_postings'] = 'Connect Failed.';
+        $errors['isError'] = true;
+        return $errors;
+    }
+
+    $stmt = $mysqli->prepare("SELECT COUNT(*) FROM Job_posts WHERE user_identification=?");
+
+    if (false === $stmt) {
+        $errors['job_postings'] = 'Prepare() failed.';
+        $errors['isError'] = true;
+        return $errors;
+    }
+
+    $bind = $stmt->bind_param('s', $user_id);
+
+    if (false === $bind) {
+        $errors['job_postings'] = 'Bind_param failed.';
+        $errors['isError'] = true;
+        return $errors;
+    }
+
+    $exec = $stmt->execute();
+
+    if (false === $exec) {
+        $errors['job_postings'] = 'Execute failed.';
+        $errors['isError'] = true;
+        return $errors;
+    }
+
+    $res = $stmt->get_result();
+    $row = $res->fetch_array(MYSQLI_NUM);
+
+    //Close prepared statement
+    $stmt->close();
+
+    //Close db connection
+    $mysqli->close();
+
+    return $row;
+}
+
 function addJob()
 {
     include('./../vendor/autoload.php');

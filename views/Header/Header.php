@@ -4,7 +4,7 @@
     <h1 class="display-4 text-center text-dark pt-4">
         Store your records here.
     </h1>
-    <p class="text-muted text-center">All in once place.</p>
+    <p class="text-muted text-center">Max Jobs: 100</p>
     <?php include("./views/SearchBar/SearchBar.php") ?>
     <div class="text-center mt-3 mb-2">
         <button type="button" class="btn btn-outline-primary" onclick="onclickAddJobButton();">Add Job</button>
