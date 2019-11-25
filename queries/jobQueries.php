@@ -22,9 +22,7 @@ function getJobPostings()
         return $errors;
     }
 
-    include("./sql_connection_info.php");
-
-    $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
+    $mysqli = new mysqli("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
     if ($mysqli->connect_errno) {
         $errors['job_postings'] = 'Connect Failed.';
@@ -88,9 +86,10 @@ function getCountOfUsersTotalJobPostings()
         return $errors;
     }
 
-    include("./../sql_connection_info.php");
+    $dotenv = Dotenv\Dotenv::create("./..");
+    $dotenv->load();
 
-    $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
+    $mysqli = new mysqli("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
     if ($mysqli->connect_errno) {
         $errors['job_postings'] = 'Connect Failed.';
@@ -254,10 +253,10 @@ function addJob()
         $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_notes'])));
     }
 
-    include("./../sql_connection_info.php");
+    $dotenv = Dotenv\Dotenv::create("./..");
+    $dotenv->load();
 
-    //Variables are coming from the sql_connection_info.php file
-    $mysqli = mysqli_connect('localhost', $database_username, $database_password, $database_table_name);
+    $mysqli = mysqli_connect("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
     if (!$mysqli) {
         $errors['misc'] = "Connection error.";
@@ -426,9 +425,10 @@ function updateJob()
         $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_notes'])));
     }
 
-    include("./../sql_connection_info.php");
+    $dotenv = Dotenv\Dotenv::create("./..");
+    $dotenv->load();
 
-    $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
+    $mysqli = new mysqli("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
     if ($mysqli->connect_errno) {
         $errors['misc'] = "Connect failed.";
@@ -505,9 +505,10 @@ function deleteJob($jobId)
         $job_id = -1;
     }
 
-    include("./../sql_connection_info.php");
+    $dotenv = Dotenv\Dotenv::create("./..");
+    $dotenv->load();
 
-    $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
+    $mysqli = new mysqli("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
     if ($mysqli->connect_errno) {
         $errors['misc'] = "Connect Failed.";

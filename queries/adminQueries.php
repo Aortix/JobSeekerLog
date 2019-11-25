@@ -56,7 +56,7 @@ function registerUser()
     if (!v::stringType()->validate($username) || !v::alnum()->validate($username) || $username === "") {
         $errors['username'] = 'Username is not valid.';
         $errors['isError'] = true;
-    } else if (strlen($username > 40)) {
+    } else if (strlen($username) > 40) {
         $errors['username'] = 'Max username length is 40 characters.';
         $errors['isError'] = true;
     }
@@ -78,9 +78,10 @@ function registerUser()
     $id = uniqid();
     $timestamp = NULL;
 
-    include("./../sql_connection_info.php");
+    $dotenv = Dotenv\Dotenv::create("./..");
+    $dotenv->load();
 
-    $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
+    $mysqli = new mysqli("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
     if ($mysqli->connect_errno) {
         $errors['misc'] = "Connect Failed";
@@ -189,9 +190,7 @@ function loginUser()
         return $errors;
     }
 
-    include("./sql_connection_info.php");
-
-    $mysqli = new mysqli("localhost", $database_username, $database_password, $database_table_name);
+    $mysqli = new mysqli("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
     if ($mysqli->connect_errno) {
         $errors['misc'] = "Connect Failed";

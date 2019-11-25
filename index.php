@@ -1,4 +1,8 @@
 <?php
+include('./vendor/autoload.php');
+$dotenv = Dotenv\Dotenv::create(__DIR__);
+$dotenv->load();
+
 session_start();
 include("./queries/adminQueries.php");
 
