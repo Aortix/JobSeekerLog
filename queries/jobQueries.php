@@ -86,9 +86,6 @@ function getCountOfUsersTotalJobPostings()
         return $errors;
     }
 
-    $dotenv = Dotenv\Dotenv::create(__DIR__);
-    $dotenv->load();
-
     $mysqli = new mysqli("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
     if ($mysqli->connect_errno) {
@@ -252,9 +249,6 @@ function addJob()
     } else {
         $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_notes'])));
     }
-
-    $dotenv = Dotenv\Dotenv::create(__DIR__);
-    $dotenv->load();
 
     $mysqli = mysqli_connect("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
@@ -425,9 +419,6 @@ function updateJob()
         $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_notes'])));
     }
 
-    $dotenv = Dotenv\Dotenv::create(__DIR__);
-    $dotenv->load();
-
     $mysqli = new mysqli("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 
     if ($mysqli->connect_errno) {
@@ -504,9 +495,6 @@ function deleteJob($jobId)
     } else {
         $job_id = -1;
     }
-
-    $dotenv = Dotenv\Dotenv::create(__DIR__);
-    $dotenv->load();
 
     $mysqli = new mysqli("localhost", $_SERVER['DB_USERNAME'], $_SERVER['DB_PASSWORD'], $_SERVER['DB_TABLE_NAME']);
 

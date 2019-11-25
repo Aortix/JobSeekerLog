@@ -8,9 +8,6 @@ function registerUser()
 
     $errors = array("isError" => false);
 
-    $dotenv = Dotenv\Dotenv::create(__DIR__);
-    $dotenv->load();
-
     if (isset($_POST['g-recaptcha-response'])) {
         $url = "https://www.google.com/recaptcha/api/siteverify";
         $data = array(
