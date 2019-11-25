@@ -78,7 +78,7 @@ function registerUser()
     $id = uniqid();
     $timestamp = NULL;
 
-    $mysqli = new mysqli(getenv('DB_HOST'), getenv(['DB_USERNAME']), getenv(['DB_PASSWORD']), getenv(['DB_TABLE_NAME']));
+    $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
 
     if ($mysqli->connect_errno) {
         $errors['misc'] = "Connect Failed";
@@ -187,7 +187,7 @@ function loginUser()
         return $errors;
     }
 
-    $mysqli = new mysqli(getenv('DB_HOST'), getenv(['DB_USERNAME']), getenv(['DB_PASSWORD']), getenv(['DB_TABLE_NAME']));
+    $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
 
     if ($mysqli->connect_errno) {
         $errors['misc'] = "Connect Failed";
