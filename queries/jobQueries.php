@@ -151,7 +151,7 @@ function addJob()
     if (
         !isset($_POST['company_name']) ||
         !v::stringType()->validate(htmlspecialchars($_POST['company_name'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['company_name']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_name']))
     ) {
         $errors['company_name'] = "Required. Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -162,7 +162,7 @@ function addJob()
     if (
         !isset($_POST['company_position']) ||
         !v::stringType()->validate(htmlspecialchars($_POST['company_position'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['company_position']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_position']))
     ) {
         $errors['company_position'] = "Required. Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -176,7 +176,7 @@ function addJob()
         $company_website = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['company_website'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['company_website']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_website']))
     ) {
         $errors['company_website'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -193,7 +193,7 @@ function addJob()
         $date_applied = date('m/d/Y');
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['date_applied'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['date_applied']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['date_applied']))
     ) {
         $errors['date_applied'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -205,7 +205,7 @@ function addJob()
         $location = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['company_location'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['company_location']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_location']))
     ) {
         $errors['company_location'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -217,7 +217,7 @@ function addJob()
         $about_company = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['about_company'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['about_company']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['about_company']))
     ) {
         $errors['about_company'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -229,7 +229,7 @@ function addJob()
         $about_position = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['about_position'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['about_position']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['about_position']))
     ) {
         $errors['about_position'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -241,7 +241,7 @@ function addJob()
         $notes = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['company_notes'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['company_notes']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_notes']))
     ) {
         $errors['company_notes'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -320,7 +320,7 @@ function updateJob()
     if (
         !isset($_POST['updating_company_name']) ||
         !v::stringType()->validate(htmlspecialchars($_POST['updating_company_name'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['updating_company_name']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_name']))
     ) {
         $errors['updating_company_name'] = "Required. Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -331,7 +331,7 @@ function updateJob()
     if (
         !isset($_POST['updating_company_position']) ||
         !v::stringType()->validate(htmlspecialchars($_POST['updating_company_position'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['updating_company_position']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_position']))
     ) {
         $errors['updating_company_position'] = "Required. Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -345,7 +345,7 @@ function updateJob()
         $company_website = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_company_website'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['updating_company_website']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_website']))
     ) {
         $errors['updating_company_website'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -362,7 +362,7 @@ function updateJob()
         $date_applied = date('m/d/Y');
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_date_applied'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['updating_date_applied']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_date_applied']))
     ) {
         $errors['updating_date_applied'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -374,7 +374,7 @@ function updateJob()
         $location = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_company_location'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['updating_company_location']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_location']))
     ) {
         $errors['updating_company_location'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -386,7 +386,7 @@ function updateJob()
         $about_company = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_about_company'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['updating_about_company']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_about_company']))
     ) {
         $errors['updating_about_company'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -398,7 +398,7 @@ function updateJob()
         $about_position = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_about_position'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['updating_about_position']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_about_position']))
     ) {
         $errors['updating_about_position'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
@@ -410,7 +410,7 @@ function updateJob()
         $notes = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_company_notes'])) ||
-        !v::charset('ASCII')->validate(htmlspecialchars($_POST['updating_company_notes']))
+        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_notes']))
     ) {
         $errors['updating_company_notes'] = "Can only use ASCII characters and must be a string.";
         $errors['isError'] = true;
