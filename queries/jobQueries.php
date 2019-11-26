@@ -22,7 +22,13 @@ function getJobPostings()
         return $errors;
     }
 
-    $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    if (getenv('PRODUCTION') !== false) {
+        $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    } else {
+        $dotenv = Dotenv\Dotenv::create(__DIR__);
+        $dotenv->load();
+        $mysqli = new mysqli(getenv('DB_HOST_DEVELOPMENT'), getenv('DB_USERNAME_DEVELOPMENT'), getenv('DB_PASSWORD_DEVELOPMENT'), getenv('DB_TABLE_NAME_DEVELOPMENT'));
+    }
 
     if ($mysqli->connect_errno) {
         $errors['job_postings'] = 'Connect Failed.';
@@ -86,7 +92,13 @@ function getCountOfUsersTotalJobPostings()
         return $errors;
     }
 
-    $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    if (getenv('PRODUCTION') !== false) {
+        $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    } else {
+        $dotenv = Dotenv\Dotenv::create(__DIR__);
+        $dotenv->load();
+        $mysqli = new mysqli(getenv('DB_HOST_DEVELOPMENT'), getenv('DB_USERNAME_DEVELOPMENT'), getenv('DB_PASSWORD_DEVELOPMENT'), getenv('DB_TABLE_NAME_DEVELOPMENT'));
+    }
 
     if ($mysqli->connect_errno) {
         $errors['job_postings'] = 'Connect Failed.';
@@ -250,7 +262,13 @@ function addJob()
         $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['company_notes'])));
     }
 
-    $mysqli = mysqli_connect(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    if (getenv('PRODUCTION') !== false) {
+        $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    } else {
+        $dotenv = Dotenv\Dotenv::create(__DIR__);
+        $dotenv->overload();
+        $mysqli = new mysqli(getenv('DB_HOST_DEVELOPMENT'), getenv('DB_USERNAME_DEVELOPMENT'), getenv('DB_PASSWORD_DEVELOPMENT'), getenv('DB_TABLE_NAME_DEVELOPMENT'));
+    }
 
     if (!$mysqli) {
         $errors['misc'] = "Connection error.";
@@ -419,7 +437,13 @@ function updateJob()
         $notes = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['updating_company_notes'])));
     }
 
-    $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    if (getenv('PRODUCTION') !== false) {
+        $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    } else {
+        $dotenv = Dotenv\Dotenv::create(__DIR__);
+        $dotenv->load();
+        $mysqli = new mysqli(getenv('DB_HOST_DEVELOPMENT'), getenv('DB_USERNAME_DEVELOPMENT'), getenv('DB_PASSWORD_DEVELOPMENT'), getenv('DB_TABLE_NAME_DEVELOPMENT'));
+    }
 
     if ($mysqli->connect_errno) {
         $errors['misc'] = "Connect failed.";
@@ -496,7 +520,13 @@ function deleteJob($jobId)
         $job_id = -1;
     }
 
-    $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    if (getenv('PRODUCTION') !== false) {
+        $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    } else {
+        $dotenv = Dotenv\Dotenv::create(__DIR__);
+        $dotenv->load();
+        $mysqli = new mysqli(getenv('DB_HOST_DEVELOPMENT'), getenv('DB_USERNAME_DEVELOPMENT'), getenv('DB_PASSWORD_DEVELOPMENT'), getenv('DB_TABLE_NAME_DEVELOPMENT'));
+    }
 
     if ($mysqli->connect_errno) {
         $errors['misc'] = "Connect Failed.";

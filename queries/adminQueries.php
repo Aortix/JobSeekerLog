@@ -10,8 +10,12 @@ function registerUser()
 
     if (isset($_POST['g-recaptcha-response'])) {
         $url = "https://www.google.com/recaptcha/api/siteverify";
+        if (getenv("PRODUCTION") === false) {
+            $dotenv = Dotenv\Dotenv::create(__DIR__);
+            $dotenv->load();
+        }
         $data = array(
-            'secret' => $_SERVER['RECAPTCHA'],
+            'secret' => getenv('RECAPTCHA'),
             'response' => $_POST['g-recaptcha-response'],
         );
         $options = array('http' => array(
@@ -78,7 +82,11 @@ function registerUser()
     $id = uniqid();
     $timestamp = NULL;
 
-    $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    if (getenv('PRODUCTION') !== false) {
+        $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    } else {
+        $mysqli = new mysqli(getenv('DB_HOST_DEVELOPMENT'), getenv('DB_USERNAME_DEVELOPMENT'), getenv('DB_PASSWORD_DEVELOPMENT'), getenv('DB_TABLE_NAME_DEVELOPMENT'));
+    }
 
     if ($mysqli->connect_errno) {
         $errors['misc'] = "Connect Failed";
@@ -187,7 +195,13 @@ function loginUser()
         return $errors;
     }
 
-    $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    if (getenv('PRODUCTION') !== false) {
+        $mysqli = new mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'), getenv('DB_TABLE_NAME'));
+    } else {
+        $dotenv = Dotenv\Dotenv::create(__DIR__);
+        $dotenv->load();
+        $mysqli = new mysqli(getenv('DB_HOST_DEVELOPMENT'), getenv('DB_USERNAME_DEVELOPMENT'), getenv('DB_PASSWORD_DEVELOPMENT'), getenv('DB_TABLE_NAME_DEVELOPMENT'));
+    }
 
     if ($mysqli->connect_errno) {
         $errors['misc'] = "Connect Failed";
