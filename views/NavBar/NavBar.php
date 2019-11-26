@@ -9,7 +9,7 @@
                 <button class="btn btn-outline-dark" onclick="user_logout()">Logout</button>
             </div>
         </div>
-    <? } else { ?>
+    <?php } else { ?>
         <div class="navbar_container pt-3 pb-3 border-bottom">
             <h4 class="navbar_title" onclick="switchToMainPage()">Job Seeker's Log</h4>
             <div>

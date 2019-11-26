@@ -160,37 +160,52 @@ function addJob()
     } else {
         $user_id = trim(htmlspecialchars($_COOKIE['login_id']));
     }
+
     if (
         !isset($_POST['company_name']) ||
         !v::stringType()->validate(htmlspecialchars($_POST['company_name'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_name']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_name']))
     ) {
-        $errors['company_name'] = "Required. Can only use ASCII characters and must be a string.";
+        $errors['company_name'] = "Must have a length. Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['company_name']) > 255) {
+        $errors['company_name'] = "Too long, 255 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
         $company_name = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_name']))));
     }
+
     if (
         !isset($_POST['company_position']) ||
         !v::stringType()->validate(htmlspecialchars($_POST['company_position'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_position']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_position']))
     ) {
-        $errors['company_position'] = "Required. Can only use ASCII characters and must be a string.";
+        $errors['company_position'] = "Must have a length. Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['company_position']) > 255) {
+        $errors['company_position'] = "Too long, 255 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
         $company_position = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_position']))));
     }
+
     if (
         $_POST['company_website'] === ""
     ) {
         $company_website = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['company_website'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_website']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_website']))
     ) {
-        $errors['company_website'] = "Can only use ASCII characters and must be a string.";
+        $errors['company_website'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['company_website']) > 255) {
+        $errors['company_website'] = "Too long, 255 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
@@ -199,63 +214,88 @@ function addJob()
             $company_website = "Https://" . $company_website;
         }
     }
+
     if (
         $_POST['date_applied'] === ""
     ) {
         $date_applied = date('m/d/Y');
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['date_applied'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['date_applied']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['date_applied']))
     ) {
-        $errors['date_applied'] = "Can only use ASCII characters and must be a string.";
+        $errors['date_applied'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['date_applied']) > 255) {
+        $errors['date_applied'] = "Too long, 255 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
         $date_applied = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['date_applied'])));
     }
+
     if ($_POST['company_location'] === "") {
         $location = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['company_location'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_location']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_location']))
     ) {
-        $errors['company_location'] = "Can only use ASCII characters and must be a string.";
+        $errors['company_location'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['company_location']) > 255) {
+        $errors['company_location'] = "Too long, 255 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
         $location = preg_replace('/\'|\\+|\s+/', ' ', ucfirst(trim(htmlspecialchars($_POST['company_location']))));
     }
+
     if ($_POST['about_company'] === "") {
         $about_company = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['about_company'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['about_company']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['about_company']))
     ) {
-        $errors['about_company'] = "Can only use ASCII characters and must be a string.";
+        $errors['about_company'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['about_company']) > 2000) {
+        $errors['about_company'] = "Too long, 2000 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
         $about_company = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['about_company'])));
     }
+
     if ($_POST['about_position'] === "") {
         $about_position = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['about_position'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['about_position']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['about_position']))
     ) {
-        $errors['about_position'] = "Can only use ASCII characters and must be a string.";
+        $errors['about_position'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['about_position']) > 2000) {
+        $errors['about_position'] = "Too long, 2000 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
-        $about_position = preg_replace('/\'|\\+|\s+/', ' ', trim(htmlspecialchars($_POST['about_position'])));
+        $about_position = preg_replace("/\'|\\+|\s+/", ' ', trim(htmlspecialchars($_POST['about_position'])));
     }
+
     if ($_POST['company_notes'] === "") {
         $notes = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['company_notes'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_notes']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['company_notes']))
     ) {
-        $errors['company_notes'] = "Can only use ASCII characters and must be a string.";
+        $errors['company_notes'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['company_notes']) > 1000) {
+        $errors['company_notes'] = "Too long, 1000 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
@@ -338,9 +378,13 @@ function updateJob()
     if (
         !isset($_POST['updating_company_name']) ||
         !v::stringType()->validate(htmlspecialchars($_POST['updating_company_name'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_name']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_name']))
     ) {
-        $errors['updating_company_name'] = "Required. Can only use ASCII characters and must be a string.";
+        $errors['updating_company_name'] = "Must have a length. Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['updating_company_name']) > 255) {
+        $errors['updating_company_name'] = "Too long, 255 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
@@ -349,9 +393,13 @@ function updateJob()
     if (
         !isset($_POST['updating_company_position']) ||
         !v::stringType()->validate(htmlspecialchars($_POST['updating_company_position'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_position']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_position']))
     ) {
-        $errors['updating_company_position'] = "Required. Can only use ASCII characters and must be a string.";
+        $errors['updating_company_position'] = "Must have a length. Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['updating_company_position']) > 255) {
+        $errors['updating_company_position'] = "Too long, 255 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
@@ -363,9 +411,13 @@ function updateJob()
         $company_website = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_company_website'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_website']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_website']))
     ) {
-        $errors['updating_company_website'] = "Can only use ASCII characters and must be a string.";
+        $errors['updating_company_website'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['updating_company_website']) > 255) {
+        $errors['updating_company_website'] = "Too long, 255 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
@@ -380,9 +432,13 @@ function updateJob()
         $date_applied = date('m/d/Y');
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_date_applied'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_date_applied']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_date_applied']))
     ) {
-        $errors['updating_date_applied'] = "Can only use ASCII characters and must be a string.";
+        $errors['updating_date_applied'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['updating_date_applied']) > 255) {
+        $errors['updating_date_applied'] = "Too long, 255 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
@@ -392,9 +448,13 @@ function updateJob()
         $location = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_company_location'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_location']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_location']))
     ) {
-        $errors['updating_company_location'] = "Can only use ASCII characters and must be a string.";
+        $errors['updating_company_location'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['updating_company_location']) > 255) {
+        $errors['updating_company_location'] = "Too long, 255 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
@@ -404,9 +464,13 @@ function updateJob()
         $about_company = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_about_company'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_about_company']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_about_company']))
     ) {
-        $errors['updating_about_company'] = "Can only use ASCII characters and must be a string.";
+        $errors['updating_about_company'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['updating_about_company']) > 2000) {
+        $errors['updating_about_company'] = "Too long, 2000 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
@@ -416,9 +480,13 @@ function updateJob()
         $about_position = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_about_position'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_about_position']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_about_position']))
     ) {
-        $errors['updating_about_position'] = "Can only use ASCII characters and must be a string.";
+        $errors['updating_about_position'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['updating_about_position']) > 2000) {
+        $errors['updating_about_position'] = "Too long, 2000 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
@@ -428,9 +496,13 @@ function updateJob()
         $notes = "N/A";
     } else if (
         !v::stringType()->validate(htmlspecialchars($_POST['updating_company_notes'])) ||
-        !v::alnum(' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_notes']))
+        !v::alnum(' ‐↵,≤≥≠≈™€′″…•†‡„“”—–½·¶±°®«»©§£¢‘’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')->validate(htmlspecialchars($_POST['updating_company_notes']))
     ) {
-        $errors['updating_company_notes'] = "Can only use ASCII characters and must be a string.";
+        $errors['updating_company_notes'] = "Some characters outside of ASCII are not allowed.";
+        $errors['isError'] = true;
+        return $errors;
+    } else if (strlen($_POST['updating_company_notes']) > 1000) {
+        $errors['updating_company_notes'] = "Too long, 1000 characters max.";
         $errors['isError'] = true;
         return $errors;
     } else {
@@ -494,6 +566,8 @@ function updateJob()
 
     //Close db connection
     $mysqli->close();
+
+    return NULL;
 }
 
 function deleteJob($jobId)

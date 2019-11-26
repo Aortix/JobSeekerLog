@@ -1,5 +1,17 @@
 <?php
 session_start();
+
+if (isset($_SESSION['isError']) && $_SESSION['isError'] === false) {
+    session_unset();
+    session_destroy();
+}
+
+if (isset($_POST['clear_errors'])) {
+    session_unset();
+    session_destroy();
+    $_POST = array();
+}
+
 include("./queries/adminQueries.php");
 
 if (isset($_POST['login_submit'])) {
