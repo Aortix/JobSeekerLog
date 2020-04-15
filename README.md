@@ -19,3 +19,5 @@ If you want to use this project and add more code to it, then you'll need to cre
   DB_TABLE_NAME_DEVELOPMENT=(local database table name goes here)
   RECAPTCHA=(server/secret key from google recaptcha)
 ```
+
+Licensed under MIT License -> https://opensource.org/licenses/MIT
